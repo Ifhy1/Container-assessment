@@ -1,0 +1,23 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - much-todo-net
+
+  backend:
+    build: .
+    container_name: much-todo-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - much-todo-net
+    restart: always
+
+networks:
+  much-todo-net:
+    driver: bridge
